@@ -193,6 +193,7 @@ function App() {
                 <span className="tech-tag">Wix Velo</span>
                 <span className="tech-tag">REST API</span>
                 <span className="tech-tag">Webhooks</span>
+                <span className="tech-tag">Zapier</span>
                 <span className="tech-tag">JavaScript</span>
               </div>
             </div>
