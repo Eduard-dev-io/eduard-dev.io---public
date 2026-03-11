@@ -169,7 +169,7 @@ function App() {
           </p>
           <div className="hero-buttons">
             <a href="#projects" className="btn btn-primary" onClick={() => trackClick('View My Work')}>View My Work</a>
-            <a href="https://drive.google.com/file/d/1HqP8-Hae8dWL-_T5POKxyNeoe-TGNSku/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" onClick={() => trackClick('Download My CV')}>Download My CV</a>
+            <a href="https://drive.google.com/file/d/1hTPlhg2UMx7bTVQPdtSEdACCwe1YmShg/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" onClick={() => trackClick('Download My CV')}>Download My CV</a>
           </div>
         </div>
       </section>
