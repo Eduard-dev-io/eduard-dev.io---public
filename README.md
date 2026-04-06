@@ -68,13 +68,13 @@ Notes:
 
 This local project is intended to push to:
 
-`https://github.com/Eduard-dev-io/eduard-dev.io---public`
+`https://github.com/EduardP19/eduard-dev.io---public`
 
 Typical commands:
 
 ```bash
 # set remote once
-git remote add origin https://github.com/Eduard-dev-io/eduard-dev.io---public.git
+git remote add origin https://github.com/EduardP19/eduard-dev.io---public.git
 
 # stage + commit
 git add -A

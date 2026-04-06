@@ -413,7 +413,7 @@ function App() {
           <div className="contact-links">
             <a href="mailto:eduard.proca93@gmail.com" className="btn btn-primary" onClick={() => trackClick('Email Me')}>Email Me</a>
             <a href="https://www.linkedin.com/in/eduard-p-34a06b232" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" onClick={() => trackClick('Connect on LinkedIn')}>Connect on LinkedIn</a>
-            <a href="https://github.com/eduard-dev" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" onClick={() => trackClick('View GitHub')}>View GitHub</a>
+            <a href="https://github.com/EduardP19" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" onClick={() => trackClick('View GitHub')}>View GitHub</a>
           </div>
         </div>
       </section>
