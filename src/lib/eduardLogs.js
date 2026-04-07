@@ -1,6 +1,6 @@
 import { supabase } from './supabase'
 
-const LOGS_TABLE = 'logs-eduarddev'
+const LOG_SESSION_RPC = 'log_eduarddev_session_event'
 const SESSION_KEY = 'eduard-dev-session-id'
 
 function safeStorageGet(storage, key) {
@@ -83,6 +83,7 @@ export async function logEduardDevEvent({
   pagePath = null,
   referrer = null,
   metadata = {},
+  chatTurn = null,
 }) {
   if (!supabase || typeof window === 'undefined') {
     return
@@ -91,38 +92,48 @@ export async function logEduardDevEvent({
   const searchParams = new URLSearchParams(window.location.search)
   const attribution = getAttribution(searchParams)
   const userAgent = navigator.userAgent
+  const occurredAt = new Date().toISOString()
+  const normalizedChatTurn =
+    chatTurn && typeof chatTurn === 'object'
+      ? {
+          role: chatTurn.role ?? null,
+          content: chatTurn.content ?? null,
+          occurred_at: occurredAt,
+          source: chatTurn.source ?? null,
+        }
+      : null
 
-  const payload = {
-    session_id: getOrCreateSessionId(),
-    event_name: eventName,
-    event_type: eventType,
-    occurred_at: new Date().toISOString(),
-    page_url: pageUrl ?? window.location.href,
-    page_path: pagePath ?? `${window.location.pathname}${window.location.search}`,
-    referrer: referrer ?? document.referrer ?? null,
-    utm_source: attribution.utm_source,
-    utm_medium: attribution.utm_medium,
-    utm_campaign: attribution.utm_campaign,
-    utm_term: attribution.utm_term,
-    utm_content: attribution.utm_content,
-    device_type: detectDeviceType(),
-    browser: detectBrowser(userAgent),
-    os: detectOS(userAgent),
-    viewport_width: window.innerWidth || null,
-    viewport_height: window.innerHeight || null,
-    language: navigator.language || null,
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
-    user_agent: userAgent,
-    metadata: {
+  const { error } = await supabase.rpc(LOG_SESSION_RPC, {
+    p_session_id: getOrCreateSessionId(),
+    p_event_name: eventName,
+    p_event_type: eventType,
+    p_occurred_at: occurredAt,
+    p_page_url: pageUrl ?? window.location.href,
+    p_page_path: pagePath ?? `${window.location.pathname}${window.location.search}`,
+    p_referrer: referrer ?? document.referrer ?? null,
+    p_utm_source: attribution.utm_source,
+    p_utm_medium: attribution.utm_medium,
+    p_utm_campaign: attribution.utm_campaign,
+    p_utm_term: attribution.utm_term,
+    p_utm_content: attribution.utm_content,
+    p_device_type: detectDeviceType(),
+    p_browser: detectBrowser(userAgent),
+    p_os: detectOS(userAgent),
+    p_viewport_width: window.innerWidth || null,
+    p_viewport_height: window.innerHeight || null,
+    p_language: navigator.language || null,
+    p_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
+    p_user_agent: userAgent,
+    p_metadata: {
       site: 'eduard-dev.io',
       recruiter_name: attribution.recruiter_name,
       recruiter_company: attribution.recruiter_company,
       recruiter_industry: attribution.recruiter_industry,
       ...metadata,
     },
-  }
+    p_chat_turn: normalizedChatTurn,
+  })
 
-  const { error } = await supabase.from(LOGS_TABLE).insert([payload])
   if (error && import.meta.env.DEV) {
     console.warn('Eduard.dev log insert failed:', error.message)
   }

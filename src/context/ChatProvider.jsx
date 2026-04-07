@@ -47,6 +47,10 @@ function ChatProvider({ children }) {
         input_length: input.length,
         history_length: nextHistory.length,
       },
+      chatTurn: {
+        role: 'user',
+        content: input,
+      },
     })
 
     setLoading(true)
@@ -113,6 +117,11 @@ function ChatProvider({ children }) {
       metadata: {
         reply_source: replySource,
         reply_length: assistantReply.length,
+      },
+      chatTurn: {
+        role: 'assistant',
+        content: assistantReply,
+        source: replySource,
       },
     })
 
