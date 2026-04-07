@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { getPortfolioFallbackReply } from '../lib/chatFallback'
+import { logEduardDevEvent } from '../lib/eduardLogs'
 import { ChatContext } from './chatContext'
 
 const MAX_MESSAGE_LENGTH = 500
@@ -39,10 +40,20 @@ function ChatProvider({ children }) {
       return nextHistory
     })
 
+    void logEduardDevEvent({
+      eventName: 'chat_prompt',
+      eventType: 'chat',
+      metadata: {
+        input_length: input.length,
+        history_length: nextHistory.length,
+      },
+    })
+
     setLoading(true)
     setError(null)
 
     let assistantReply = ''
+    let replySource = 'live'
 
     try {
       const response = await fetch('/api/chat', {
@@ -75,17 +86,35 @@ function ChatProvider({ children }) {
 
       if (!assistantReply) {
         assistantReply = getPortfolioFallbackReply(input)
+        replySource = 'fallback'
       }
     } catch (error) {
       assistantReply = getPortfolioFallbackReply(input)
+      replySource = 'fallback'
       const reason =
         typeof error?.message === 'string' && error.message.trim()
           ? error.message.trim()
           : 'Live AI is unavailable right now.'
       setError(`${reason} Showing local portfolio answers.`)
+      void logEduardDevEvent({
+        eventName: 'chat_error',
+        eventType: 'chat',
+        metadata: {
+          reason,
+        },
+      })
     } finally {
       setLoading(false)
     }
+
+    void logEduardDevEvent({
+      eventName: 'chat_reply',
+      eventType: 'chat',
+      metadata: {
+        reply_source: replySource,
+        reply_length: assistantReply.length,
+      },
+    })
 
     setMessages((prev) =>
       [...prev, { role: 'assistant', content: assistantReply }].slice(-MAX_HISTORY),

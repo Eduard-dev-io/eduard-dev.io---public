@@ -1,8 +1,22 @@
 import { useState } from 'react'
 import ChatInterface from './ChatInterface'
+import { logEduardDevEvent } from '../lib/eduardLogs'
 
 function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
+
+  const handleToggle = () => {
+    const nextIsOpen = !isOpen
+    setIsOpen(nextIsOpen)
+
+    void logEduardDevEvent({
+      eventName: nextIsOpen ? 'chat_widget_open' : 'chat_widget_close',
+      eventType: 'chat',
+      metadata: {
+        surface: 'widget',
+      },
+    })
+  }
 
   return (
     <div className="chat-widget-root">
@@ -20,7 +34,7 @@ function ChatWidget() {
             <button
               type="button"
               className="chat-widget-close"
-              onClick={() => setIsOpen(false)}
+              onClick={handleToggle}
               aria-label="Close chat"
             >
               ✕
@@ -33,7 +47,7 @@ function ChatWidget() {
       <button
         type="button"
         className={`chat-toggle ${isOpen ? 'chat-toggle-open' : ''}`}
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={handleToggle}
         aria-expanded={isOpen}
         aria-controls="chat-widget-panel"
       >

@@ -4,6 +4,7 @@ import ReactGA from 'react-ga4'
 import './index.css'
 import App from './App.jsx'
 import ChatProvider from './context/ChatProvider.jsx'
+import PortfolioLogger from './components/PortfolioLogger.jsx'
 
 // Initialize Google Analytics
 // REPLACE 'G-XXXXXXXXXX' WITH YOUR ACTUAL MEASUREMENT ID
@@ -14,6 +15,7 @@ if (import.meta.env.PROD) {
 
 const appTree = (
   <ChatProvider>
+    <PortfolioLogger />
     <App />
   </ChatProvider>
 )
