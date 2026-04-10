@@ -4,12 +4,24 @@ import ChatWidget from './components/ChatWidget'
 import ProjectsSection from './components/ProjectsSection'
 import { getPublishedProjects } from './lib/projects'
 
+const GITHUB_URL = 'https://github.com/EduardP19'
+const CV_URL = 'https://drive.google.com/file/d/1zguR14hCFsEp8Msu2B0jaNxTcx0c86Tz/view?usp=sharing'
+
 const trackClick = (label) => {
   window.gtag('event', 'cta_click', {
     cta_name: label,
     page_path: window.location.pathname,
   });
 };
+
+const GitHubMark = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path
+      fill="currentColor"
+      d="M12 .5C5.649.5.5 5.649.5 12c0 5.086 3.292 9.404 7.86 10.926.574.105.784-.25.784-.556 0-.274-.01-1-.015-1.962-3.198.695-3.872-1.54-3.872-1.54-.523-1.327-1.277-1.68-1.277-1.68-1.043-.712.079-.698.079-.698 1.153.08 1.76 1.183 1.76 1.183 1.024 1.757 2.689 1.25 3.344.958.104-.744.402-1.251.73-1.538-2.553-.29-5.238-1.276-5.238-5.685 0-1.257.449-2.286 1.184-3.091-.119-.29-.513-1.456.112-3.037 0 0 .965-.31 3.162 1.18A10.97 10.97 0 0 1 12 6.319c.975.005 1.956.132 2.872.387 2.194-1.49 3.158-1.18 3.158-1.18.624 1.581.23 2.747.112 3.037.736.805 1.183 1.834 1.183 3.09 0 4.42-2.689 5.393-5.252 5.678.413.355.78 1.054.78 2.125 0 1.536-.014 2.775-.014 3.152 0 .308.207.667.79.554A11.505 11.505 0 0 0 23.5 12C23.5 5.649 18.351.5 12 .5Z"
+    />
+  </svg>
+)
 
 const PARAM_KEYS = [
   "UTM_NAME",
@@ -241,7 +253,20 @@ function App() {
             </p>
             <div className="hero-buttons">
               <a href="#projects" className="btn btn-primary" onClick={() => trackClick('View My Work')}>View My Work</a>
-              <a href="https://drive.google.com/file/d/1t-5qDGBRsIXQrkA0qR1p5bfNoavDY_kn/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" onClick={() => trackClick('Download My CV')}>Download My CV</a>
+              <div className="button-cluster">
+                <a href={CV_URL} target="_blank" rel="noopener noreferrer" className="btn btn-secondary" onClick={() => trackClick('Download My CV')}>Download My CV</a>
+                <a
+                  href={GITHUB_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-secondary btn-icon"
+                  aria-label="View GitHub profile"
+                  title="View GitHub profile"
+                  onClick={() => trackClick('View GitHub Hero')}
+                >
+                  <GitHubMark />
+                </a>
+              </div>
             </div>
           </div>
           <div id="chat" className="hero-chat">
@@ -413,7 +438,17 @@ function App() {
           <div className="contact-links">
             <a href="mailto:eduard.proca93@gmail.com" className="btn btn-primary" onClick={() => trackClick('Email Me')}>Email Me</a>
             <a href="https://www.linkedin.com/in/eduard-p-34a06b232" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" onClick={() => trackClick('Connect on LinkedIn')}>Connect on LinkedIn</a>
-            <a href="https://github.com/EduardP19" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" onClick={() => trackClick('View GitHub')}>View GitHub</a>
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary btn-icon"
+              aria-label="View GitHub profile"
+              title="View GitHub profile"
+              onClick={() => trackClick('View GitHub Contact')}
+            >
+              <GitHubMark />
+            </a>
           </div>
         </div>
       </section>
@@ -421,7 +456,7 @@ function App() {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>&copy; {new Date().getFullYear()} Eduard. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Eduard P. All rights reserved.</p>
         </div>
       </footer>
       <ChatWidget />
