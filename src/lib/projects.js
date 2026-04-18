@@ -7,7 +7,7 @@ const FALLBACK_PROJECTS = [
     title: 'Say I Do Weddings',
     category: 'Wedding · Web Design',
     industry: 'Luxury Events',
-    image: '/projects/say-i-do-weddings.svg',
+    image: '/projects/SayIDoWeddings - Home.webp',
     beforeImage: null,
     brandColor: '#f6c7c1',
     description:
@@ -29,7 +29,7 @@ const FALLBACK_PROJECTS = [
     title: 'The Memory Corners',
     category: 'Events · Booking Site',
     industry: 'Experiential Brand',
-    image: '/projects/the-memory-corners.svg',
+    image: '/projects/TheMemoryCorner - Home.webp',
     beforeImage: null,
     brandColor: '#57d6c4',
     description:
@@ -51,7 +51,7 @@ const FALLBACK_PROJECTS = [
     title: 'Txengo',
     category: 'Creative · Portfolio',
     industry: 'Creative Consultant',
-    image: '/projects/txengo.svg',
+    image: '/projects/Txengo - Home.webp',
     beforeImage: null,
     brandColor: '#ff5f8f',
     description:
@@ -73,8 +73,8 @@ const FALLBACK_PROJECTS = [
     title: 'ProveIt',
     category: 'Automation · Platform',
     industry: 'Lead Generation Platform',
-    image: '/projects/proveit.svg',
-    beforeImage: null,
+    image: '/projects/ProvieIt - CF1.webp',
+    beforeImage: '/projects/Before - Proveit.webp',
     brandColor: '#6f9bff',
     description:
       'Designed backend workflows handling 50+ daily leads and 250+ API requests across website, Facebook, TikTok, and manual lead sources. Built automation pipelines connected to CRM and third-party APIs (180+ automated workflows/day), implemented post-lead email sequences reducing advisory phone time by ~30 minutes per client, developed an end-to-end financial claim qualification calculator, and led production deployment/debugging via GitHub and Wix CLI.',
@@ -102,7 +102,7 @@ const FALLBACK_PROJECTS = [
     title: 'Study and Succeed',
     category: 'Education · Agency',
     industry: 'Education Brand',
-    image: '/projects/study-and-succeed.svg',
+    image: '/projects/StudyAndSucceed - Home.webp',
     beforeImage: null,
     brandColor: '#4fc4ff',
     description:
@@ -121,15 +121,97 @@ const FALLBACK_PROJECTS = [
 ]
 
 const projectSelect =
-  'id, slug, title, category, industry, image, before_image, brand_color, description, summary, highlights, live_url, case_study, featured, published, sort_order, created_at'
+  'id, slug, title, category, industry, brand_color, description, summary, highlights, live_url, case_study, featured, published, sort_order, created_at'
 const projectSelectWithoutBrandColor =
-  'id, slug, title, category, industry, image, before_image, description, summary, highlights, live_url, case_study, featured, published, sort_order, created_at'
-const projectSelectWithoutBeforeImage =
-  'id, slug, title, category, industry, image, brand_color, description, summary, highlights, live_url, case_study, featured, published, sort_order, created_at'
-const projectSelectWithoutOptionalColumns =
-  'id, slug, title, category, industry, image, description, summary, highlights, live_url, case_study, featured, published, sort_order, created_at'
-const projectSelectWithoutImage =
   'id, slug, title, category, industry, description, summary, highlights, live_url, case_study, featured, published, sort_order, created_at'
+
+const LOCAL_PROJECT_IMAGE_FILES = [
+  'AuraProCosmetics - Home.webp',
+  'Before - Proveit.webp',
+  'Before - The Bus Stop.webp',
+  'ProvieIt - CF1.webp',
+  'Resevia-Agent - Sandbox.webp',
+  'Resevia-Website - Home.webp',
+  'SayIDoWeddings - Home.webp',
+  'StudyAndSucceed - Home.webp',
+  'TheBusStop - Home.webp',
+  'TheMemoryCorner - Home.webp',
+  'Txengo - Home.webp',
+]
+
+const BEFORE_PREFIX = /^before[-\s]+/i
+
+const toKey = (value = '') => value.toLowerCase().replace(/[^a-z0-9]/g, '')
+const singularize = (value = '') => (value.endsWith('s') ? value.slice(0, -1) : value)
+
+function levenshtein(a, b) {
+  if (a === b) return 0
+  if (a.length === 0) return b.length
+  if (b.length === 0) return a.length
+
+  const previous = Array.from({ length: b.length + 1 }, (_, index) => index)
+  const current = new Array(b.length + 1)
+
+  for (let i = 1; i <= a.length; i += 1) {
+    current[0] = i
+    for (let j = 1; j <= b.length; j += 1) {
+      const substitutionCost = a[i - 1] === b[j - 1] ? 0 : 1
+      current[j] = Math.min(previous[j] + 1, current[j - 1] + 1, previous[j - 1] + substitutionCost)
+    }
+    for (let j = 0; j <= b.length; j += 1) {
+      previous[j] = current[j]
+    }
+  }
+
+  return previous[b.length]
+}
+
+const LOCAL_PROJECT_IMAGE_ENTRIES = LOCAL_PROJECT_IMAGE_FILES.map((filename) => {
+  const stem = filename.replace(/\.[^.]+$/, '').trim()
+  const kind = BEFORE_PREFIX.test(stem) ? 'before' : 'after'
+  const withoutPrefix = kind === 'before' ? stem.replace(BEFORE_PREFIX, '') : stem
+  const [base] = withoutPrefix.split(/\s*-\s*/, 1)
+
+  return {
+    src: `/projects/${filename}`,
+    kind,
+    key: toKey(base),
+  }
+})
+
+function resolveLocalImages(project) {
+  const slugKey = toKey(project.slug)
+  const slugKeySingular = singularize(slugKey)
+  const titleKey = toKey(project.title)
+  const titleKeySingular = singularize(titleKey)
+
+  const scoreEntry = (entry) => {
+    if (entry.key === titleKey) return -1
+    if (entry.key === titleKeySingular || singularize(entry.key) === titleKey) return 0
+    if (entry.key === slugKey) return 0
+    if (entry.key === slugKeySingular || singularize(entry.key) === slugKey) return 1
+    if (slugKey.includes(entry.key) || entry.key.includes(slugKey)) return 2
+
+    const distance = levenshtein(entry.key, slugKey)
+    if (distance <= 2) return 3 + distance
+    return Number.POSITIVE_INFINITY
+  }
+
+  const pick = (kind) => {
+    const candidates = LOCAL_PROJECT_IMAGE_ENTRIES
+      .filter((entry) => entry.kind === kind)
+      .map((entry) => ({ entry, score: scoreEntry(entry) }))
+      .filter(({ score }) => Number.isFinite(score))
+      .sort((a, b) => (a.score === b.score ? a.entry.src.localeCompare(b.entry.src) : a.score - b.score))
+
+    return candidates[0]?.entry.src ?? null
+  }
+
+  return {
+    image: pick('after'),
+    beforeImage: pick('before'),
+  }
+}
 
 function normalizeHighlights(value) {
   if (Array.isArray(value)) {
@@ -170,14 +252,16 @@ function normalizeBrandColor(value) {
 }
 
 function normalizeProject(project) {
+  const localImages = resolveLocalImages(project)
+
   return {
     id: project.id,
     slug: project.slug,
     title: project.title,
     category: project.category ?? 'Project',
     industry: project.industry ?? 'Client Work',
-    image: project.image ?? null,
-    beforeImage: project.before_image ?? project.beforeImage ?? null,
+    image: localImages.image ?? null,
+    beforeImage: localImages.beforeImage ?? null,
     brandColor: normalizeBrandColor(project.brand_color ?? project.brandColor),
     description: project.description ?? '',
     summary: project.summary ?? project.description ?? '',
@@ -210,9 +294,6 @@ export async function getPublishedProjects() {
   const selectVariants = [
     projectSelect,
     projectSelectWithoutBrandColor,
-    projectSelectWithoutBeforeImage,
-    projectSelectWithoutOptionalColumns,
-    projectSelectWithoutImage,
   ]
 
   for (const selectClause of selectVariants) {
