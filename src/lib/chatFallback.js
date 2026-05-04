@@ -2,7 +2,7 @@ const FALLBACK_RESPONSES = [
   {
     patterns: ['skill', 'stack', 'technology', 'tech'],
     answer:
-      "Eduard works with JavaScript, TypeScript, React, Next.js, HTML, CSS, Supabase, REST APIs, webhooks, Gemini 2.5 Pro, Twilio infrastructure, iCal.eu booking flows, Wix Velo, WordPress, and automation tools like Zapier and Google Apps Script.",
+      "Eduard works with JavaScript, TypeScript, React, Next.js, HTML, CSS, Supabase, REST APIs, webhooks, Gemini 2.5 Pro, Twilio infrastructure, iCal.eu booking flows, WordPress, and automation tools like Zapier and Google Apps Script.",
   },
   {
     patterns: ['project', 'portfolio', 'work', 'built'],

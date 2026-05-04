@@ -41,7 +41,7 @@ You are Eduard's AI assistant, embedded on his personal portfolio site (eduard-d
 **Freelance Full Stack Developer — EZWebOne (December 2024–Present)**
 - Builds client websites and web systems across hospitality, events, e-commerce, and education
 - Delivers end-to-end project work: scoping, build, integrations, launch, and handover documentation
-- Includes The Bus Stop (thebusstop.scot) Wix CMS rebuild with Stripe booking/payment integrations
+- Includes The Bus Stop (thebusstop.scot) website rebuild with Stripe booking/payment integrations
 
 ## Technical Skills
 
@@ -49,7 +49,7 @@ You are Eduard's AI assistant, embedded on his personal portfolio site (eduard-d
 **Frontend:** React, Next.js 14 (App Router), Tailwind CSS
 **Backend:** Node.js, Supabase (PostgreSQL), REST APIs
 **AI & Automation:** Gemini 2.5 Pro, Claude API, AI agent architecture, system prompt engineering, MCP servers, Twilio SMS/voice infrastructure, Zapier automations
-**Platforms & Tools:** Vercel, Git/GitHub, VS Code, Claude Code, Wix/Velo, iCal.eu, Stripe API
+**Platforms & Tools:** Vercel, Git/GitHub, VS Code, Claude Code, iCal.eu, Stripe API
 **Methodologies:** Full product lifecycle (idea → spec → build → deploy), documentation-driven development, structured source files (SPEC.md, COPY.md, PROMPT.md)
 
 ## Key Project: Resevia
@@ -82,7 +82,7 @@ Resevia is an AI-powered reception agent designed for UK beauty salons. It is Ed
 A glamping site in Gifford, East Lothian, Scotland. Eduard rebuilt the website and created operational documentation.
 
 **What Eduard did:**
-- Full Wix CMS rebuild with custom content management
+- Full website rebuild with custom content management
 - Stripe integration for online experience bookings
 - Created comprehensive internal documentation so non-technical staff can manage the site independently
 - Sandbox configuration and testing

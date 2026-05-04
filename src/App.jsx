@@ -233,7 +233,7 @@ function App() {
           id="background-video"
           preload="metadata"
         >
-          <source src="https://video.wixstatic.com/video/11062b_b02d1b7883d5447fb2453acb93a5102b/1080p/mp4/file.mp4" type="video/mp4" />
+          <source src="https://cdn.coverr.co/videos/coverr-aerial-view-of-a-city-at-night-1579/1080p.mp4" type="video/mp4" />
         </video>
         <div className="container hero-content">
           <div className="hero-copy">
@@ -248,8 +248,8 @@ function App() {
             <h1>Full Stack Developer with<br />Real Client Experience</h1>
             <p>
               I build fast, conversion-focused web products using JavaScript/TypeScript, React,
-              Next.js, APIs, AI Agents, and Automations across custom builds, Wix, and
-              WordPress. Available for developer roles.
+              Next.js, APIs, AI Agents, and Automations across custom builds and WordPress.
+              Available for developer roles.
             </p>
             <div className="hero-buttons">
               <a href="#projects" className="btn btn-primary" onClick={() => trackClick('View My Work')}>View My Work</a>
@@ -340,7 +340,6 @@ function App() {
                 <span className="skill-pill">Supabase</span>
                 <span className="skill-pill">MySQL</span>
                 <span className="skill-pill">MSSQL</span>
-                <span className="skill-pill">Wix Data Collections</span>
               </div>
             </div>
 
@@ -348,7 +347,6 @@ function App() {
               <h3>Platforms & CMS</h3>
               <div className="skills-list">
                 <span className="skill-pill">Vercel</span>
-                <span className="skill-pill">Wix Velo</span>
                 <span className="skill-pill">WordPress</span>
                 <span className="skill-pill">Framer</span>
                 <span className="skill-pill">Squarespace</span>
@@ -412,7 +410,7 @@ function App() {
             </p>
             <p>
               Before that, through EZWebOne, I delivered websites and CMS builds for small business
-              clients, including custom Wix/Velo work, Stripe integrations, and internal
+              clients, including custom CMS work, Stripe integrations, and internal
               documentation so non-technical teams could manage their sites confidently after
               launch.
             </p>

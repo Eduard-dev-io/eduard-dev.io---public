@@ -77,7 +77,7 @@ const FALLBACK_PROJECTS = [
     beforeImage: '/projects/Before - Proveit.webp',
     brandColor: '#6f9bff',
     description:
-      'Designed backend workflows handling 50+ daily leads and 250+ API requests across website, Facebook, TikTok, and manual lead sources. Built automation pipelines connected to CRM and third-party APIs (180+ automated workflows/day), implemented post-lead email sequences reducing advisory phone time by ~30 minutes per client, developed an end-to-end financial claim qualification calculator, and led production deployment/debugging via GitHub and Wix CLI.',
+      'Designed backend workflows handling 50+ daily leads and 250+ API requests across website, Facebook, TikTok, and manual lead sources. Built automation pipelines connected to CRM and third-party APIs (180+ automated workflows/day), implemented post-lead email sequences reducing advisory phone time by ~30 minutes per client, developed an end-to-end financial claim qualification calculator, and led production deployment/debugging via GitHub and platform CLI workflows.',
     summary:
       'Develop and maintain a lead-generation and automation platform serving 10k+ monthly users and 50+ daily leads, working closely with leadership on product architecture and automation systems.',
     highlights: [
@@ -85,12 +85,12 @@ const FALLBACK_PROJECTS = [
       '250+ API requests/day with 180+ automated workflows/day',
       'Automated post-lead email sequences reducing advisory calls by ~30 min/client',
       'Built end-to-end financial claim qualification calculator',
-      'Led GitHub + Wix CLI deployments and production debugging',
+      'Led GitHub-based deployments and production debugging',
       'Migrated 27,000 leads with batch processing, retry logic, and checkpoints',
     ],
     liveUrl: null,
     caseStudy:
-      'Lead Database Migration Project: designed and implemented an automated migration system updating 27,000 existing leads with unique partnership links. Built batch processing to bypass Wix backend execution limits (~14 seconds), with retry logic and checkpoint tracking for safe resume after interruptions. Result: all 27k records migrated and future lead link generation automated.',
+      'Lead Database Migration Project: designed and implemented an automated migration system updating 27,000 existing leads with unique partnership links. Built batch processing to bypass strict backend execution limits (~14 seconds), with retry logic and checkpoint tracking for safe resume after interruptions. Result: all 27k records migrated and future lead link generation automated.',
     featured: false,
     published: true,
     sortOrder: 4,
